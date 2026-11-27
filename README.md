@@ -1,27 +1,30 @@
 # TOMDOM Mail
 
-Panel PWA firmy TOMDOM. Aktualna wersja jest interfejsem przygotowawczym i **nie ma jeszcze bezpośredniego połączenia z Gmail API**.
+PWA firmy TOMDOM z bezpośrednią integracją Gmail API przez Google Identity Services.
 
-## Stan
-- PWA działa na GitHub Pages.
-- Można przygotować treść wiadomości i skopiować ją.
-- Gmail otwiera się przez oficjalną stronę.
-- Bezpośrednie odczytywanie skrzynki i wysyłanie przez Gmail nie są jeszcze aktywne.
+## Funkcje
+- Logowanie Google przez OAuth.
+- Odczyt 20 najnowszych wiadomości ze skrzynki odbiorczej.
+- Wyświetlanie nadawcy, tematu, daty i fragmentu wiadomości.
+- Wysyłanie wiadomości przez Gmail API z dodatkowym potwierdzeniem odbiorcy i treści.
 
-## Plan integracji Gmail
-1. Utworzyć projekt Google Cloud i włączyć Gmail API.
-2. Skonfigurować ekran zgody OAuth oraz klienta OAuth dla aplikacji.
-3. Uruchomić backend HTTPS, który obsłuży OAuth, odświeżanie tokenów i wywołania Gmail API.
-4. Przechowywać tokeny wyłącznie po stronie serwera w bezpiecznym magazynie sekretów.
-5. Dodać do PWA logowanie Google, listę wiadomości, podgląd załączników i tworzenie szkiców.
-6. Dodać wysyłkę z kontrolą odbiorcy, tematu i treści przed zatwierdzeniem.
+## Konfiguracja Google Cloud wymagana przed pierwszym połączeniem
+1. Otwórz Google Cloud Console i utwórz lub wybierz projekt.
+2. Włącz **Gmail API**.
+3. Skonfiguruj Google Auth Platform / ekran zgody OAuth. Dodaj konto Google jako użytkownika testowego, jeśli aplikacja jest w trybie testowym.
+4. Utwórz OAuth Client ID typu **Web application**.
+5. W polu Authorized JavaScript origins dodaj dokładny origin aplikacji GitHub Pages, np. `https://tziolkowski-prog.github.io`.
+6. Wklej Client ID w aplikacji TOMDOM Mail.
 
-## Wymagania bezpieczeństwa
-- Nigdy nie umieszczać client secret, access token ani refresh token w plikach PWA, JavaScript, repozytorium ani GitHub Pages.
-- Nie prosić użytkownika o hasło Google ani kod 2FA.
-- Używać minimalnych zakresów Gmail API niezbędnych do działania.
-- Wysyłka wiadomości wymaga świadomego zatwierdzenia przez użytkownika.
-- Backend musi weryfikować sesję i chronić endpointy przed nieuprawnionym dostępem.
+## Uprawnienia
+Aplikacja prosi o `gmail.readonly` oraz `gmail.send`. Nie żąda dostępu do usuwania ani modyfikowania wiadomości.
 
-## Ważne
-Sama publikacja PWA na GitHub Pages nie daje jej dostępu do prywatnej skrzynki Gmail. Bez skonfigurowanego backendu i autoryzacji Google aplikacja nie może czytać ani wysyłać wiadomości przez Gmail API.
+## Bezpieczeństwo i ograniczenia
+- Nie ma hasła Google ani client secret w repozytorium.
+- Token dostępu pozostaje w pamięci bieżącej karty i nie jest zapisywany w localStorage ani wysyłany na własny serwer.
+- Po wygaśnięciu tokenu użytkownik musi ponownie autoryzować połączenie.
+- Wysyłka wymaga zaznaczenia potwierdzenia i dodatkowego okna potwierdzającego.
+- GitHub Pages jest statycznym hostingiem. Ta implementacja używa publicznego klienta OAuth i tokenów krótkotrwałych w przeglądarce; nie przechowuje refresh tokenów.
+
+## Publikacja
+GitHub Actions publikuje zawartość repozytorium na GitHub Pages. Po zmianach odśwież aplikację; jeśli stara wersja jest buforowana, zamknij ją całkowicie i uruchom ponownie.
