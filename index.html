@@ -2,20 +2,26 @@
 <html lang="pl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#172033"><meta name="description" content="Panel poczty firmowej TOMDOM">
+<meta name="theme-color" content="#172033"><meta name="description" content="Bezpośredni panel Gmail firmy TOMDOM">
 <link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icons/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css">
 <title>TOMDOM Mail</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-<header><div class="logo">TD</div><div><h1>TOMDOM Mail</h1><p>Panel poczty firmowej</p></div></header>
+<header><div class="logo">TD</div><div><h1>TOMDOM Mail</h1><p>Bezpośrednia obsługa poczty Gmail</p></div></header>
 <main>
-<section class="notice"><strong>Integracja Gmail jest przygotowywana</strong><p>Docelowo panel będzie łączył się z Twoim dotychczasowym kontem Gmail, pobierał wiadomości i przygotowywał odpowiedzi. Wysyłka przez Gmail zostanie uruchomiona dopiero po bezpiecznej autoryzacji konta. Ta wersja jeszcze nie ma bezpośredniego połączenia z Gmail.</p></section>
-<section class="card"><h2>Twoja poczta</h2><p>Na czas przygotowania integracji możesz otworzyć Gmail w przeglądarce.</p><a class="primary" href="https://mail.google.com/" target="_blank" rel="noopener">Otwórz Gmail ↗</a></section>
-<section class="card"><h2>Przygotuj wiadomość</h2>
-<label for="to">Adres odbiorcy</label><input id="to" type="email" placeholder="odbiorca@example.com">
+<section class="notice"><strong>Połączenie z Google</strong><p>Zaloguj się przez oficjalne okno Google. Aplikacja nie prosi o hasło. Token dostępu jest przechowywany tylko w pamięci tej karty i znika po jej zamknięciu.</p>
+<label for="clientId">Identyfikator klienta OAuth Google</label><input id="clientId" autocomplete="off" placeholder="xxxx.apps.googleusercontent.com">
+<button id="connect">Połącz z Gmail</button><button id="disconnect" class="secondary" hidden>Rozłącz</button><p id="status" role="status" aria-live="polite">Najpierw skonfiguruj identyfikator OAuth.</p>
+</section>
+<section class="card"><div class="actions" style="justify-content:space-between;align-items:center"><h2>Odebrane wiadomości</h2><button id="refresh" class="secondary" disabled>Odśwież</button></div><div id="account" class="small"></div><div id="messages"><p class="small">Połącz konto, aby pobrać wiadomości.</p></div></section>
+<section class="card"><h2>Nowa wiadomość</h2>
+<label for="to">Odbiorca</label><input id="to" type="email" placeholder="adres@example.com">
 <label for="subject">Temat</label><input id="subject" placeholder="Temat wiadomości">
-<label for="body">Treść</label><textarea id="body" rows="9" placeholder="Wpisz lub wklej treść wiadomości..."></textarea>
-<div class="actions"><button id="copy">Kopiuj treść</button><button id="mailto" class="secondary">Otwórz program pocztowy</button></div><p id="status" role="status" aria-live="polite"></p></section>
-<section class="card"><h2>Bezpieczeństwo</h2><p>Nie wpisuj tutaj hasła Google, kodów 2FA ani kluczy odzyskiwania. Połączenie z Gmail będzie wymagało oficjalnej autoryzacji Google. Dane dostępowe będą przechowywane po stronie serwera, nigdy w kodzie aplikacji ani publicznym repozytorium.</p></section>
-</main><footer>© TOMDOM · Panel poczty</footer><script src="./app.js"></script>
+<label for="body">Treść</label><textarea id="body" rows="8" placeholder="Treść wiadomości..."></textarea>
+<label class="check"><input id="confirmSend" type="checkbox"> Potwierdzam odbiorcę, temat i treść. Wyślij tę wiadomość z mojego Gmaila.</label>
+<button id="send" disabled>Wyślij przez Gmail</button>
+</section>
+<section class="card"><h2>Bezpieczeństwo i konfiguracja</h2><p>Połączenie wykorzystuje Google Identity Services i Gmail API. Aplikacja żąda dostępu do odczytu poczty oraz wysyłania wiadomości. Nie ma dostępu do hasła Google. Identyfikator OAuth jest publicznym identyfikatorem aplikacji, nie sekretem.</p><p>W Google Cloud trzeba włączyć Gmail API, skonfigurować ekran zgody OAuth i utworzyć klienta OAuth typu aplikacja internetowa. W autoryzowanych źródłach JavaScript dodaj dokładny adres GitHub Pages tej aplikacji.</p></section>
+</main><footer>© TOMDOM · TOMDOM Mail</footer><script src="./app.js"></script>
 </body></html>
