@@ -1,0 +1,4 @@
+const el=id=>document.getElementById(id);
+el("copy").addEventListener("click",async()=>{const text=[el("subject").value,el("body").value].filter(Boolean).join("\n\n");try{await navigator.clipboard.writeText(text);el("status").textContent="Skopiowano temat i treść. Wklej je w Proton Mail i sprawdź przed wysłaniem."}catch(e){el("status").textContent="Kopiowanie niedostępne. Zaznacz tekst i skopiuj ręcznie."}});
+el("mailto").addEventListener("click",()=>{const to=encodeURIComponent(el("to").value);const subject=encodeURIComponent(el("subject").value);const body=encodeURIComponent(el("body").value);location.href=`mailto:${to}?subject=${subject}&body=${body}`;});
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#172033"><meta name="description" content="Panel pomocniczy TOMDOM do pracy z Proton Mail">
+<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icons/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css">
+<title>TOMDOM Proton Access</title>
+</head>
+<body>
+<header><div class="logo">TD</div><div><h1>TOMDOM Proton Access</h1><p>Pomocnik poczty firmowej</p></div></header>
+<main>
+<section class="notice"><strong>Bezpieczny tryb pracy</strong><p>Panel nie przechwytuje haseł ani kodów logowania. Otwiera oficjalny Proton Mail. Wiadomości przygotowujesz tutaj, a następnie samodzielnie sprawdzasz i wysyłasz.</p></section>
+<section class="card"><h2>Twoja poczta</h2><p>Otwórz oficjalną skrzynkę Proton.</p><a class="primary" href="https://mail.proton.me/" target="_blank" rel="noopener">Otwórz Proton Mail ↗</a></section>
+<section class="card"><h2>Przygotuj wiadomość</h2>
+<label for="to">Adres odbiorcy</label><input id="to" type="email" placeholder="odbiorca@example.com">
+<label for="subject">Temat</label><input id="subject" placeholder="Temat wiadomości">
+<label for="body">Treść</label><textarea id="body" rows="9" placeholder="Wpisz lub wklej treść wiadomości..."></textarea>
+<div class="actions"><button id="copy">Kopiuj treść</button><button id="mailto" class="secondary">Otwórz program pocztowy</button></div><p id="status" role="status" aria-live="polite"></p></section>
+<section class="card"><h2>Przed wysłaniem</h2>
+<label class="check"><input type="checkbox"> Sprawdziłem adres odbiorcy</label><label class="check"><input type="checkbox"> Sprawdziłem temat i treść</label><label class="check"><input type="checkbox"> Usunąłem niepotrzebne dane</label><label class="check"><input type="checkbox"> Dodałem właściwe załączniki w Proton Mail</label></section>
+<section class="card small"><h2>Ważne ograniczenia</h2><p>To pomocnicza aplikacja, nie oficjalny produkt Proton. Ta wersja nie czyta skrzynki, nie pobiera odpowiedzi i nie wysyła wiadomości automatycznie. Nie wpisuj tu hasła, kodów 2FA ani kluczy odzyskiwania.</p></section>
+</main><footer>© TOMDOM · Wersja 1.2</footer><script src="./app.js"></script>
+</body></html>
